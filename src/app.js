@@ -2,61 +2,54 @@ import "dotenv/config";
 import cors from "cors";
 import express from "express";
 import db from "./config/dbConnect.js";
+import router from "./routes/index.js";
 
 db.on("error", console.log.bind(console, "Error connection"));
 db.once("open", () => {
-  console.log("Connection database maked with success ✨");
+  console.log("Database connection successful ✨");
 });
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(router);
 
-const books = [
-  { id: 1, title: "Lord of Rings" },
-  { id: 2, title: "The Hobbit" },
-];
+// app.get("/", (req, res) => {
+//   res.status(200).send("Course of Node");
+// });
 
-app.get("/", (req, res) => {
-  res.status(200).send("Course of Node");
-});
+// app.get("/books/:id", (req, res) => {
+//   const index = findBook(req.params.id);
 
-app.get("/books", (req, res) => {
-  res.json(books);
-});
+//   res.json(books[index]);
+// });
 
-app.get("/books/:id", (req, res) => {
-  const index = findBook(req.params.id);
+// app.post("/books", (req, res) => {
+//   books.push(req.body);
 
-  res.json(books[index]);
-});
+//   res.status(201).send("Book created with success!");
+// });
 
-app.post("/books", (req, res) => {
-  books.push(req.body);
+// app.put("/books/:id", (req, res) => {
+//   const index = findBook(req.params.id);
 
-  res.status(201).send("Book created with success!");
-});
+//   books[index].title = req.body.title;
 
-app.put("/books/:id", (req, res) => {
-  const index = findBook(req.params.id);
+//   res.json(books);
+// });
 
-  books[index].title = req.body.title;
+// app.delete("/books/:id", (req, res) => {
+//   const { id } = req.params;
+//   const index = findBook(id);
 
-  res.json(books);
-});
+//   books.splice(index, 1);
 
-app.delete("/books/:id", (req, res) => {
-  const { id } = req.params;
-  const index = findBook(id);
+//   res.send(`Book ${id} deleted with success!`);
+// });
 
-  books.splice(index, 1);
-
-  res.send(`Book ${id} deleted with success!`);
-});
-
-function findBook(id) {
-  return books.findIndex((book) => book.id == id);
-}
+// function findBook(id) {
+//   return books.findIndex((book) => book.id == id);
+// }
 
 export default app;
