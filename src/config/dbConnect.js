@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
 
-mongoose.connect(
-  "mongodb+srv://alura:123@alura.o0mafs1.mongodb.net/?retryWrites=true&w=majority"
-);
+mongoose.connect(process.env.URL_DATABASE_CONNECTION);
 
 const db = mongoose.connection;
 

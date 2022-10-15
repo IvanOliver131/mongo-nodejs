@@ -1,3 +1,5 @@
+import "dotenv/config";
+import cors from "cors";
 import express from "express";
 import db from "./config/dbConnect.js";
 
@@ -9,6 +11,7 @@ db.once("open", () => {
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 const books = [
   { id: 1, title: "Lord of Rings" },
